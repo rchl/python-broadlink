@@ -156,6 +156,56 @@ Send the following 16 byte payload with a command value of 0x006a:
 |0x00|0x03|
 |0x01-0x0f|0x00|
 
+Exiting learning mode
+---------------------
+
+Send the following 16 byte payload with a command value of 0x006a:
+
+|Offset|Contents|
+|------|--------|
+|0x00|0x1e|
+|0x01-0x0f|0x00|
+
+Entering RF frequency scan mode followed by learning mode
+---------------------------------------------------------
+
+Send the following 16 byte payload with a command value of 0x006a:
+
+|Offset|Contents|
+|------|--------|
+|0x00|0x19|
+|0x01-0x0f|0x00|
+
+This enters RF frequency scanning mode. Now periodically send following 16 byte payload with a command value of 0x006a to check if scan was completed:
+
+|Offset|Contents|
+|------|--------|
+|0x00|0x1a|
+|0x01-0x0f|0x00|
+
+The response packet will contain an encrypted payload from byte 0x38 onwards. Decrypt this using the default key and IV. The format of the decrypted payload is:
+
+|Offset|Contents|
+|------|--------|
+|0x00|Scan status|
+|0x01-0x0f|0x00|
+
+Byte 0x00 will have value of 0x01 if scan has completed, 0x00 otherwise. On receiving 0x01 value, send the following 16 byte payload with a command value of 0x006a to enter learning mode:
+
+|Offset|Contents|
+|------|--------|
+|0x00|0x1b|
+|0x01-0x0f|0x00|
+
+The response packet will contain an encrypted payload from byte 0x38 onwards. Decrypt this using the default key and IV. The format of the decrypted payload is:
+
+|Offset|Contents|
+|------|--------|
+|0x00|Learn mode status|
+|0x01-0x0f|0x00|
+
+Byte 0x00 will have value of 0x01 if learning mode was enabled, 0x00 otherwise.
+
 Reading back data from learning mode
 ------------------------------------
 

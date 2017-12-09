@@ -58,8 +58,10 @@ Learn commands :
 ```
 # Learn and save to file
 broadlink_cli --device @BEDROOM.device --learnfile LG-TV.power
-# LEard and show at console
-broadlink_cli --device @BEDROOM.device --learn 
+# Learn and show at console
+broadlink_cli --device @BEDROOM.device --learn
+# Perform RF frequency scan before learning (works also with --learnfile)
+broadlink_cli --device @BEDROOM.device --learn --scan
 ```
 
 

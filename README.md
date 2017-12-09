@@ -43,6 +43,20 @@ ir_packet = devices[0].check_data()
 ```
 (This will return None if the device does not have a packet to return)
 
+Enter RF frequency scanning mode:
+```
+devices[0].enter_frequency_scan_and_learn()
+```
+(This is required to learn some remotes that operate on slightly different
+frequency)
+
+Check if the frequency scan has completed and enter learning mode if so:
+```
+if devices[0].check_frequency_scan_completed():
+  devices[0].enter_learning_after_frequency_scan()
+```
+(Use check_data() now to check for the code)
+
 Send an IR or RF packet:
 ```
 devices[0].send_data(ir_packet)
